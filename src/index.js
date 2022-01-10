@@ -3,7 +3,8 @@ const express = require('express');
 const path = require('path')
 const session = require('express-session')
 const app = express();
-const flash = require('connect-flash')
+const flash = require('connect-flash');
+const { application } = require('express');
 
 //settings
 app.set('views', path.join( __dirname, 'views'))
@@ -18,6 +19,12 @@ app.use(session({
     secret: 'secretkey_dev'
 }))
 app.use(flash())
+
+//global variable
+app.use((req, res, next) => {
+    app.locals.messageGlobal = req.flash('successGlobal')
+    next()
+})
 
 //routes
 app.use(require('./routes/index.routes'))

@@ -7,12 +7,13 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', (req, res) => {
-   /*    req.session.user_data = req.body */
-   req.flash('user', req.body)
+  /*    req.session.user_data = req.body */
+  req.flash("user", req.body);
 
+  req.flash("successGlobal", "Ahora estás registrado Global"); //mensaje
+  req.flash("success", "Ahora estás registrado"); //mensaje
 
-   req.flash("success", "Ahora estás registrado"); //mensaje
-   res.redirect('/profile')
+  res.redirect("/products");
 })
 
 router.get("/profile", (req, res) => {
@@ -24,7 +25,9 @@ router.get("/profile", (req, res) => {
 });
 
 router.get('/products', (req, res) => {
-   res.render('profile')
+   const user = req.flash('user')[0]; // trae un array
+ const message = req.flash('success')[0] //mensaje
+   res.render("products", {user,message});
 })
 
 module.exports = router
